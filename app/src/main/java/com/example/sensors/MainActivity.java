@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             sensorManager.registerListener(this, accelerometerSensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
+        if(gyroSensor!=null){
+            sensorManager.registerListener(this,gyroSensor,
+                    sensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     @Override
