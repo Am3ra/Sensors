@@ -1,8 +1,11 @@
 package com.example.sensors;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor gyroSensor;
     TextView mainText;
     TextView gyroText;
+    BluetoothAdapter bluetoothAdapter ;
+    private final static int REQUEST_ENABLE_BT = 1;
+
 
 
     @Override
@@ -47,6 +53,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Log.d("DEBUGGGIGN","REACHED");
         mainText.setText("OK");
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            // Device doesn't support Bluetooth
+        }
+
+
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent,REQUEST_ENABLE_BT);
+        }
+
+        Intent discoverableIntent =
+                new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+        startActivity(discoverableIntent);
 
 
 
@@ -104,5 +126,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+
+        }else{
+            Log.d("DEBUG","COULD NOT FIND BT");
+        }
     }
 }
