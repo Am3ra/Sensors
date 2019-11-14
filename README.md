@@ -4,6 +4,8 @@
 Utilizar los sensores es algo bastante simple..
 
 
+https://youtu.be/ZRsAHmMj4P0
+
 Tienes que declarar 2 cosas, el sensorManager y el sensor que quieres leer.
 
 ``` java
