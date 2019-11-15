@@ -10,8 +10,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accelerometerSensor;
     private Sensor gyroSensor;
+    private WifiManager wifiManager;
     TextView mainText;
     TextView gyroText;
     BluetoothAdapter bluetoothAdapter ;
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             mainText.setText("NULL SENSOR");
             finish();
         }
-//
+
         if (gyroSensor == null){
             gyroText.setText("Null Sensor");
         }
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         startActivity(discoverableIntent);
 
 
-
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     @Override
@@ -136,5 +139,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }else{
             Log.d("DEBUG","COULD NOT FIND BT");
         }
+    }
+
+    public void enableWifi(View v) {
+        wifiManager.setWifiEnabled(true);
+    }
+
+    public void disableWifi(View v) {
+        wifiManager.setWifiEnabled(false);
     }
 }
